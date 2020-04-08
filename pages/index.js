@@ -4,14 +4,37 @@ import anime from "animejs";
 
 const Home = () => {
   useEffect(() => {
-    anime({
-      targets: "div",
-      translateX: 250,
-      rotate: "1turn",
-      backgroundColor: "#FFF",
-      duration: 800,
+    const timeline = anime.timeline({
+      targets: ".mouth",
+      autoplay: true,
+      loop: false, // it can't loop because we are using absolute time offsets
+      complete: (x) => doRestart(),
     });
-  });
+
+    function doRestart() {
+      console.log("doing restart");
+      timeline.restart();
+    }
+    let absTime = 0;
+    ["A", "B", "C", "A", "C", "B", "B"].map((shape) => {
+      timeline.add(
+        {
+          targets: `#shape-${shape}`,
+          opacity: "1",
+        },
+        absTime
+      );
+      absTime += 500
+      timeline.add(
+        {
+          targets: `#shape-${shape}`,
+          opacity: "0",
+        },
+        absTime
+      ); 
+    })
+
+  }, []);
   return (
     <div className="container">
       <Head>
@@ -21,17 +44,21 @@ const Home = () => {
 
       <main>
         <h1 className="title">Welcome to Korerorero!</h1>
+        <div>
+          {["A", "B", "C"].map((shape) => {
+            const src = `/lisa-${shape}.png`;
+            const id = `shape-${shape}`;
+            return (
+              <div key={id} className="mouth" id={id}>
+                <img src={src} /> {shape}
+              </div>
+            );
+          })}
+        </div>
       </main>
 
       <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+
 
         main {
           padding: 5rem 0;
@@ -147,6 +174,11 @@ const Home = () => {
             width: 100%;
             flex-direction: column;
           }
+        }
+
+        .mouth {
+          position: absolute;
+          opacity: 0;
         }
       `}</style>
 
