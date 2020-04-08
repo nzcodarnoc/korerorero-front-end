@@ -50,7 +50,7 @@ const Home = () => {
             const id = `shape-${shape}`;
             return (
               <div key={id} className="mouth" id={id}>
-                <img src={src} /> {shape}
+                <img src={src} alt="" /> {shape}
               </div>
             );
           })}
