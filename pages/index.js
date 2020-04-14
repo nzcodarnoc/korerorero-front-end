@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import Head from "next/head";
 import anime from "animejs";
 
+const MOUTH_SHAPES = "/mouth-shapes"
+
 const Home = () => {
   useEffect(() => {
     const timeline = anime.timeline({
@@ -16,7 +18,7 @@ const Home = () => {
       timeline.restart();
     }
     let absTime = 0;
-    ["A", "B", "C", "A", "C", "B", "B"].map((shape) => {
+    ["A", "B", "C", "D", "E", "F", "G", "H", "X"].map((shape) => {
       timeline.add(
         {
           targets: `#shape-${shape}`,
@@ -45,8 +47,8 @@ const Home = () => {
       <main>
         <h1 className="title">Welcome to Korerorero!</h1>
         <div>
-          {["A", "B", "C"].map((shape) => {
-            const src = `/lisa-${shape}.png`;
+          {["A", "B", "C", "D", "E", "F", "G", "H", "X"].map((shape) => {
+            const src = `${MOUTH_SHAPES}/mouth-${shape}.svg`;
             const id = `shape-${shape}`;
             return (
               <div key={id} className="mouth" id={id}>
