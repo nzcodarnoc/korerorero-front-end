@@ -1,5 +1,6 @@
 import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
 
-export const OK = `${publicRuntimeConfig.ORCHESTRATION_ENDPOINT}/`;
-export const REQUEST = `${publicRuntimeConfig.ORCHESTRATION_ENDPOINT}/request`;
+export const ENDPOINT = publicRuntimeConfig.ORCHESTRATION_ENDPOINT;
+export const STATUS = `${ENDPOINT}/`;
+export const REQUEST = `${ENDPOINT}/request`;

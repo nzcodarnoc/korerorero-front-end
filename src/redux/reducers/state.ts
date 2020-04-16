@@ -1,8 +1,8 @@
 export type ResponseState = {
   isFetching: number;
   error?: string;
-  shapes?: string;
-  audio?: HTMLAudioElement;
+  shapes?: JSON;
+  audio?: string;
 };
 
 export type AppState = {
@@ -13,7 +13,7 @@ export const initialState: AppState = {
   response: {
     isFetching: 0,
     error: null,
-    mouthShapes: null,
+    shapes: null,
     audio: null,
   },
 };
