@@ -13,11 +13,9 @@ module.exports = {
 
     return config;
   },
-  env: {
-    ORCHESTRATION_ENDPOINT: "http://localhost:8000/orchestration",
-  },
   assetPrefix: isProd ? "http://localhost:8000/front-end" : "",
   publicRuntimeConfig: {
     staticFolder: isProd ? "/front-end" : "",
+    ORCHESTRATION_ENDPOINT: "http://localhost:8000/orchestration",
   },
 };

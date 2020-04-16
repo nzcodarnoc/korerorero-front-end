@@ -6,13 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "storybook": "start-storybook -p 6006 -c .storybook -s ./public"
+    "storybook": "yarn run start-mock-server & start-storybook -p 6006 -c .storybook -s ./public",
+    "start-mock-server": "node __mocks__/server.js"
   },
   "dependencies": {
     "animejs": "^3.1.0",
     "axios": "^0.19.2",
-    "dotenv": "^8.2.0",
-    "envalid": "^6.0.1",
     "fs": "^0.0.1-security",
     "next": "9.3.4",
     "next-redux-wrapper": "^5.0.0",
@@ -31,6 +30,7 @@
     "@types/redux-logger": "^3.0.7",
     "babel-loader": "^8.1.0",
     "babel-preset-react-app": "^9.1.2",
+    "json-server": "^0.16.1",
     "typescript": "^3.8.3"
   }
 }
