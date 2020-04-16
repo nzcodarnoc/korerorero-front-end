@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import Head from "next/head";
 import anime from "animejs";
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig()
 
-const MOUTH_SHAPES = "/mouth-shapes"
+const MOUTH_SHAPES = `${publicRuntimeConfig.staticFolder}/mouth-shapes`
 
 const Home = () => {
   useEffect(() => {
