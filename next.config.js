@@ -1,11 +1,6 @@
-require("dotenv").config();
-
-const envalid = require("envalid");
-const { url } = require("envalid");
-
-const env = envalid.cleanEnv(process.env, {
-  ORCHESTRATION_ENDPOINT: url(),
-});
+// See https://github.com/docker/compose/issues/6889
+// for why this project is not using a .env file
+// TL:DR; .env may be broken for docker-compose 
 
 module.exports = {
   webpack: (config, { isServer }) => {
@@ -18,6 +13,6 @@ module.exports = {
     return config;
   },
   env: {
-    ORCHESTRATION_ENDPOINT: env.ORCHESTRATION_ENDPOINT,
+    ORCHESTRATION_ENDPOINT: "http://localhost:8000/orchestration",
   },
 };
