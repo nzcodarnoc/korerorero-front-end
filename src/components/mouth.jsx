@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import anime from "animejs";
 import getConfig from 'next/config'

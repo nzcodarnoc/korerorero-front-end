@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { firstResponse } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
-import Mouth from "../components/mouth"
+import Mouth from "../components/Mouth"
 
 function Index({ firstResponse, isFetching, ...rest }: any) {
   useEffect(() => {
