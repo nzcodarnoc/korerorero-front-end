@@ -1,5 +1,5 @@
 import axios from "axios";
-import { OK } from "../../utils";
+import { RESPONSE } from "../../utils";
 
 export const REQUEST_RESPONSE = "REQUEST_RESPONSE";
 export const RECEIVE_RESPONSE = "RECEIVE_RESPONSE";
@@ -42,7 +42,7 @@ export function firstResponse(): Function {
   return (dispatch: Function) => {
     dispatch(requestResponse());
     return axios
-      .get(OK)
+      .get(RESPONSE)
       .then((response) => dispatch(receiveResponse(response)))
       .catch((error) => dispatch(receiveResponseError(error.message)));
   };
