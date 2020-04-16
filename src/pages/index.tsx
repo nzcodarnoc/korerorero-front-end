@@ -2,29 +2,62 @@ import React, { useEffect } from "react";
 import { firstResponse } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
-import Mouth from "../components/Mouth"
+import Mouth from "../components/Mouth";
+import Head from "next/head";
 
-function Index({ firstResponse, isFetching, ...rest }: any) {
+function Index({ firstResponse, isFetching, error }: any) {
   useEffect(() => {
     firstResponse();
   }, []);
   return (
     <>
-      {isFetching ? (
-        <>Loading...</>
-      ) : (
+      <Head>
+        <title>Korerorero</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      {!!isFetching && <>Loading...</>}
+      {!!error && (
         <>
-          <div>
-            The API needs it's CORS policy so it has returned the following
-            error: <code>{JSON.stringify(rest)}</code> (or, maybe the service isn't running)
-          </div>
-          <div>
-            This is totally normal and what is expected. There needs to be a PR
-            on the Orchestration Server to relax it's CORS rules.
-          </div>
+          There was an error communicating with the orchestration service:{" "}
+          <code>{error}</code>
         </>
-        )}
-      <Mouth />
+      )}
+      {!error && !isFetching && <Mouth />}
+      <style jsx>{`
+        main {
+          padding: 5rem 0;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .title {
+          margin: 0;
+          line-height: 1.15;
+          font-size: 4rem;
+          text-align: center;
+        }
+        .mouth-container {
+          margin-left: -100vw;
+        }
+        .mouth {
+          position: absolute;
+          opacity: 0;
+        }
+      `}</style>
+
+      <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+        }
+      `}</style>
     </>
   );
 }
