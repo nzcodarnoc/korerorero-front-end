@@ -16,6 +16,8 @@ export default (state = initialState.response, action: ActionTypes) => {
     case RECEIVE_RESPONSE:
       return {
         ...state,
+        audio: action.audio,
+        shapes: action.shapes,
         isFetching: state.isFetching - 1,
       };
     case RECEIVE_RESPONSE_ERROR:

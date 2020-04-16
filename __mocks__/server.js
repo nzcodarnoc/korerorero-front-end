@@ -1,9 +1,14 @@
 const express = require("express");
 const jsonServer = require("json-server");
 const app = jsonServer.create();
+var cors = require('cors')
 const middleware = jsonServer.defaults();
+const corsOptions = {
+  exposedHeaders: 'link',
+};
 
 app.use(middleware);
+app.use(cors(corsOptions));
 app.use(express.json());
 app.get("/orchestration/request", function (req, res) {
   res.set("Content-Type", "audio/wav");

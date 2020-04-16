@@ -1,7 +1,7 @@
 export type ResponseState = {
   isFetching: number;
   error?: string;
-  mouthShapes?: object;
+  shapes?: string;
   audio?: HTMLAudioElement;
 };
 
