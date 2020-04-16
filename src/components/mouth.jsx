@@ -52,7 +52,7 @@ const Home = () => {
             const id = `shape-${shape}`;
             return (
               <div key={id} className="mouth" id={id}>
-                <img src={src} alt="" /> {shape}
+                <img src={src} alt="" width="100%"/> {shape}
               </div>
             );
           })}
