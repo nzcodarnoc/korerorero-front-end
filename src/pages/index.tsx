@@ -22,7 +22,7 @@ function Index({ getShapes, isFetching, audio, mouthCues, error }: any) {
     getShapes("Please come here Watson");
   }, []);
   function didReceiveNewUserMessage(message) {
-    console.log(message);
+    getShapes(message);
   }
   return (
     <>
