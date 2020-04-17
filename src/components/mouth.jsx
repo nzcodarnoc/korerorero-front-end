@@ -38,7 +38,7 @@ function Mouth({ audio, shapes }) {
             const id = `shape-${shape}`;
             return (
               <div key={id} className="mouth" id={id}>
-                <img src={src} alt="" width="100%" />
+                <img src={src} alt="" width="50%" />
               </div>
             );
           })}
