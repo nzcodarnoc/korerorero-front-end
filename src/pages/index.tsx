@@ -1,18 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ComponentClass } from "react";
 import { firstResponse } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
 import Mouth from "../components/Mouth";
 import Head from "next/head";
-import { Widget } from "react-chat-widget";
+import dynamic from "next/dynamic";
 
-import "react-chat-widget/lib/styles.css";
+interface WidgetForwardDeclaration extends ComponentClass<{
+  handleNewUserMessage: (userInput: string) => void;
+}> {}
+
+const Widget = dynamic(
+  () => import("react-chat-widget").then((mod) => mod.Widget),
+  {
+    ssr: false,
+  }
+) as WidgetForwardDeclaration;
+
 function Index({ firstResponse, isFetching, audio, shapes, error }: any) {
   useEffect(() => {
     firstResponse();
   }, []);
-  function didRecieveNewUserMessage(message) {
-    console.log(message)
+  function didReceiveNewUserMessage(message) {
+    console.log(message);
   }
   return (
     <>
@@ -28,7 +38,7 @@ function Index({ firstResponse, isFetching, audio, shapes, error }: any) {
         </>
       )}
       {!error && !isFetching && <Mouth audio={audio} shapes={shapes} />}
-      <Widget handleNewUserMessage={didRecieveNewUserMessage} />
+      <Widget handleNewUserMessage={didReceiveNewUserMessage} />
     </>
   );
 }

@@ -44,40 +44,6 @@ function Mouth({ audio, shapes }) {
           })}
         </div>
       </main>
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-          text-align: center;
-        }
-        .mouth-container {
-          margin-left: -100vw;
-        }
-        .mouth {
-          position: absolute;
-          opacity: 0;
-        }
-      `}</style>
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-      `}</style>
     </div>
   );
 }
