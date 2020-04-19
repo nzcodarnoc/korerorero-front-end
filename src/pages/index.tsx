@@ -1,5 +1,5 @@
 import React, { useEffect, ComponentClass } from "react";
-import { firstResponse } from "../redux/actions/response";
+import { getShapes } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
 import Mouth from "../components/Mouth";
@@ -17,9 +17,9 @@ const Widget = dynamic(
   }
 ) as WidgetForwardDeclaration;
 
-function Index({ firstResponse, isFetching, audio, shapes, error }: any) {
+function Index({ getShapes, isFetching, audio, shapes, error }: any) {
   useEffect(() => {
-    firstResponse();
+    getShapes("Please come here Watson");
   }, []);
   function didReceiveNewUserMessage(message) {
     console.log(message);
@@ -51,7 +51,7 @@ const mapState = (state: AppState) => ({
 });
 
 const mapActions = {
-  firstResponse,
+  getShapes,
 };
 
 export default connect(mapState, mapActions)(Index);
