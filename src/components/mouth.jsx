@@ -6,12 +6,12 @@ const { publicRuntimeConfig } = getConfig();
 const MOUTH_SHAPES = `${publicRuntimeConfig.staticFolder}/mouth-shapes`;
 import assembleTimeline from "./helpers/assemble-timeline";
 
-function Mouth({ audio, shapes }) {
+function Mouth({ audio, mouthCues }) {
   useEffect(() => {
     anime.set('#shape-A', {
       opacity: "1"
     });
-    if (!audio || !shapes) return;
+    if (!audio || !mouthCues) return;
     const sound = new Howl({
       src: [audio],
       format: ["wav"],
@@ -21,7 +21,7 @@ function Mouth({ audio, shapes }) {
       autoplay: false,
       loop: false,
     });
-    assembleTimeline(timeline, shapes);
+    assembleTimeline(timeline, mouthCues);
     anime.set('#shape-A', {
       opacity: "0"
     });

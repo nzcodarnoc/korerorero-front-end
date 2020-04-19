@@ -1,8 +1,8 @@
-export default (timeline, shapes) => {
-  if (!shapes) return;
+export default (timeline, mouthCues) => {
+  if (!mouthCues) return;
   let cursor = 0;
   const duration = 200;
-  shapes.mouthCues.map((mouth) => {
+  mouthCues.map((mouth) => {
     console.log(mouth);
     timeline.add(
       {
