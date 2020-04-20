@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import anime from "animejs";
-import getConfig from "next/config";
+import { MOUTH_SHAPES_PATH } from "../utils";
 import { Howl, Howler } from "howler";
-const { publicRuntimeConfig } = getConfig();
-const MOUTH_SHAPES = `${publicRuntimeConfig.staticFolder}/mouth-shapes`;
 import assembleTimeline from "./helpers/assemble-timeline";
 
 function Mouth({ audio, mouthCues }) {
   useEffect(() => {
-    anime.set('#shape-A', {
-      opacity: "1"
+    anime.set("#shape-A", {
+      opacity: "1",
     });
     if (!audio || !mouthCues) return;
     const sound = new Howl({
@@ -22,28 +20,23 @@ function Mouth({ audio, mouthCues }) {
       loop: false,
     });
     assembleTimeline(timeline, mouthCues);
-    anime.set('#shape-A', {
-      opacity: "0"
+    anime.set("#shape-A", {
+      opacity: "0",
     });
     sound.play();
     timeline.play();
   });
   return (
-    <div className="container">
-      <main>
-        <h1 className="title">Welcome to Korerorero!</h1>
-        <div className="mouth-container">
-          {["A", "B", "C", "D", "E", "F", "G", "H", "X"].map((shape) => {
-            const src = `${MOUTH_SHAPES}/mouth-${shape}.svg`;
-            const id = `shape-${shape}`;
-            return (
-              <div key={id} className="mouth" id={id}>
-                <img src={src} alt="" width="50%" />
-              </div>
-            );
-          })}
-        </div>
-      </main>
+    <div className="mouth-container">
+      {["A", "B", "C", "D", "E", "F", "G", "H", "X"].map((shape) => {
+        const src = `${MOUTH_SHAPES_PATH}/mouth-${shape}.svg`;
+        const id = `shape-${shape}`;
+        return (
+          <div key={id} className="mouth" id={id}>
+            <img src={src} alt="" width="100%" />
+          </div>
+        );
+      })}
     </div>
   );
 }
