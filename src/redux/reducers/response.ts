@@ -30,6 +30,8 @@ export default (state = initialState.response, action: ActionTypes) => {
       case REQUEST_SHAPES:
         return {
           ...state,
+          mouthCues: null,
+          audio: null,
           isFetching: state.isFetching + 1,
         };
       case RECEIVE_SHAPES:

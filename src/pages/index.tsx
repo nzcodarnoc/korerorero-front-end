@@ -6,9 +6,10 @@ import Mouth from "../components/Mouth";
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
-interface WidgetForwardDeclaration extends ComponentClass<{
-  handleNewUserMessage: (userInput: string) => void;
-}> {}
+interface WidgetForwardDeclaration
+  extends ComponentClass<{
+    handleNewUserMessage: (userInput: string) => void;
+  }> {}
 
 const Widget = dynamic(
   () => import("react-chat-widget").then((mod) => mod.Widget),
@@ -19,7 +20,7 @@ const Widget = dynamic(
 
 function Index({ getShapes, isFetching, audio, mouthCues, error }: any) {
   useEffect(() => {
-    getShapes("Please come here Watson");
+    getShapes("Hello");
   }, []);
   function didReceiveNewUserMessage(message) {
     getShapes(message);
