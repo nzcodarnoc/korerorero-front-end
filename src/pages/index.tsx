@@ -1,30 +1,28 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { firstResponse } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
-import Mouth from "../components/mouth"
+import Mouth from "../components/Mouth";
+import Head from "next/head";
 
-function Index({ firstResponse, isFetching, ...rest }: any) {
+function Index({ firstResponse, isFetching, audio, shapes, error }: any) {
   useEffect(() => {
     firstResponse();
   }, []);
   return (
     <>
-      {isFetching ? (
-        <>Loading...</>
-      ) : (
+      <Head>
+        <title>Korerorero</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      {!!isFetching && <>Loading...</>}
+      {!!error && (
         <>
-          <div>
-            The API needs it's CORS policy so it has returned the following
-            error: <code>{JSON.stringify(rest)}</code> (or, maybe the service isn't running)
-          </div>
-          <div>
-            This is totally normal and what is expected. There needs to be a PR
-            on the Orchestration Server to relax it's CORS rules.
-          </div>
+          There was an error communicating with the orchestration service:{" "}
+          <code>{error}</code>
         </>
-        )}
-      <Mouth />
+      )}
+      {!error && !isFetching && <Mouth audio={audio} shapes={shapes} />}
     </>
   );
 }
@@ -32,6 +30,8 @@ function Index({ firstResponse, isFetching, ...rest }: any) {
 const mapState = (state: AppState) => ({
   isFetching: state.response.isFetching,
   error: state.response.error,
+  audio: state.response.audio,
+  shapes: state.response.shapes,
 });
 
 const mapActions = {

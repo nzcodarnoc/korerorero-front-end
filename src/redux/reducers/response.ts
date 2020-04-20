@@ -3,6 +3,9 @@ import {
   REQUEST_RESPONSE,
   RECEIVE_RESPONSE,
   RECEIVE_RESPONSE_ERROR,
+  REQUEST_SHAPES,
+  RECEIVE_SHAPES,
+  RECEIVE_SHAPES_ERROR,
   ActionTypes,
 } from "../actions/response";
 
@@ -16,6 +19,7 @@ export default (state = initialState.response, action: ActionTypes) => {
     case RECEIVE_RESPONSE:
       return {
         ...state,
+        audio: action.audio,
         isFetching: state.isFetching - 1,
       };
     case RECEIVE_RESPONSE_ERROR:
@@ -24,6 +28,23 @@ export default (state = initialState.response, action: ActionTypes) => {
         error: action.error,
         isFetching: state.isFetching - 1,
       };
+      case REQUEST_SHAPES:
+        return {
+          ...state,
+          isFetching: state.isFetching + 1,
+        };
+      case RECEIVE_SHAPES:
+        return {
+          ...state,
+          shapes: action.shapes,
+          isFetching: state.isFetching - 1,
+        };
+      case RECEIVE_SHAPES_ERROR:
+        return {
+          ...state,
+          error: action.error,
+          isFetching: state.isFetching - 1,
+        };
     default:
       return state;
   }

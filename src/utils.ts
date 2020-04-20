@@ -1,2 +1,6 @@
-export const OK = `${process.env.ORCHESTRATION_ENDPOINT}/`;
-export const RESPONSE = `${process.env.ORCHESTRATION_ENDPOINT}/response`;
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig()
+
+export const ENDPOINT = publicRuntimeConfig.ORCHESTRATION_ENDPOINT;
+export const STATUS = `${ENDPOINT}/`;
+export const REQUEST = `${ENDPOINT}/request`;
