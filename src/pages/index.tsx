@@ -1,14 +1,30 @@
-import React, { useEffect } from "react";
-import { firstResponse } from "../redux/actions/response";
+import React, { useEffect, ComponentClass } from "react";
+import { getShapes } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
 import Mouth from "../components/Mouth";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
-function Index({ firstResponse, isFetching, audio, shapes, error }: any) {
+interface WidgetForwardDeclaration
+  extends ComponentClass<{
+    handleNewUserMessage: (userInput: string) => void;
+  }> {}
+
+const Widget = dynamic(
+  () => import("react-chat-widget").then((mod) => mod.Widget),
+  {
+    ssr: false,
+  }
+) as WidgetForwardDeclaration;
+
+function Index({ getShapes, isFetching, audio, mouthCues, error }: any) {
   useEffect(() => {
-    firstResponse();
+    getShapes("Hello");
   }, []);
+  function didReceiveNewUserMessage(message) {
+    getShapes(message);
+  }
   return (
     <>
       <Head>
@@ -22,7 +38,8 @@ function Index({ firstResponse, isFetching, audio, shapes, error }: any) {
           <code>{error}</code>
         </>
       )}
-      {!error && !isFetching && <Mouth audio={audio} shapes={shapes} />}
+      {!error && !isFetching && <Mouth audio={audio} mouthCues={mouthCues} />}
+      <Widget handleNewUserMessage={didReceiveNewUserMessage} />
     </>
   );
 }
@@ -31,11 +48,11 @@ const mapState = (state: AppState) => ({
   isFetching: state.response.isFetching,
   error: state.response.error,
   audio: state.response.audio,
-  shapes: state.response.shapes,
+  mouthCues: state.response.mouthCues,
 });
 
 const mapActions = {
-  firstResponse,
+  getShapes,
 };
 
 export default connect(mapState, mapActions)(Index);

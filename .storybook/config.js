@@ -1,5 +1,8 @@
 import { setConfig } from "next/config";
 import { configure } from "@storybook/react";
+import "../src/styles/styles.scss"
+import "react-chat-widget/lib/styles.css";
+
 setConfig({
   publicRuntimeConfig: {
     staticFolder: "",

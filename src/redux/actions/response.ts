@@ -1,71 +1,29 @@
 import axios from "axios";
-import { REQUEST, ENDPOINT } from "../../utils";
-
-export const REQUEST_RESPONSE = "REQUEST_RESPONSE";
-export const RECEIVE_RESPONSE = "RECEIVE_RESPONSE";
-export const RECEIVE_RESPONSE_ERROR = "RECEIVE_RESPONSE_ERROR";
-
+import { ENDPOINT } from "../../utils";
+import { MouthCues } from "../reducers/state";
 export const REQUEST_SHAPES = "REQUEST_SHAPES";
 export const RECEIVE_SHAPES = "RECEIVE_SHAPES";
-export const RECEIVE_SHAPES_ERROR = "RECEIVE_SHAPES_ERROR";
+export const REQUEST_AUDIO = "REQUEST_AUDIO";
+export const RECEIVE_AUDIO = "RECEIVE_AUDIO";
+export const RECEIVE_ERROR = "RECEIVE_ERROR";
 
-interface RequestResponseAction {
-  type: typeof REQUEST_RESPONSE;
-}
-function requestResponse(): RequestResponseAction {
-  return {
-    type: REQUEST_RESPONSE,
+var orchestrationApi = axios.create({
+  baseURL: ENDPOINT,
+});
+// ANCHOR interface ShapesPayload
+
+interface ShapesPayload {
+  data: {
+    metadata: {
+      soundFile: string;
+      duration: number;
+    };
+    mouthCues: Array<MouthCues>;
   };
 }
 
-interface ReceiveResponseAction {
-  type: typeof RECEIVE_RESPONSE;
-  audio: string;
-}
-interface ResponsePayload {
-  audio: BlobPart;
-}
-function receiveResponse(payload: ResponsePayload): ReceiveResponseAction {
-  const blob = new Blob([payload.audio], { type: "audio/wav" });
-  const audioUrl = URL.createObjectURL(blob);
-  return {
-    type: RECEIVE_RESPONSE,
-    audio: audioUrl,
-  };
-}
-
-interface ReceiveResponseErrorAction {
-  type: typeof RECEIVE_RESPONSE_ERROR;
-  error: string;
-}
-function receiveResponseError(error: string): ReceiveResponseErrorAction {
-  return {
-    type: RECEIVE_RESPONSE_ERROR,
-    error: error,
-  };
-}
-
-// ANCHOR Shapes
-
-function getShapes(path: string): Function {
-  return (dispatch: Function) => {
-    dispatch(requestShapes());
-    return axios({
-      method: "get",
-      url: ENDPOINT + path,
-      responseType: "json",
-    })
-      .then((response) => {
-        dispatch(
-          receiveShapes({
-            shapes: response.data,
-          })
-        );
-      })
-      .catch((error) => dispatch(receiveShapesError(error.message)));
-  };
-}
-
+// ANCHOR: === SHAPES ===
+// ANCHOR: RequestShapesAction
 interface RequestShapesAction {
   type: typeof REQUEST_SHAPES;
 }
@@ -75,56 +33,108 @@ function requestShapes(): RequestShapesAction {
   };
 }
 
+// ANCHOR: ReceiveShapesAction
 interface ReceiveShapesAction {
   type: typeof RECEIVE_SHAPES;
-  shapes: JSON;
-}
-interface ShapesPayload {
-  shapes: JSON;
+  mouthCues: Array<MouthCues>;
 }
 function receiveShapes(payload: ShapesPayload): ReceiveShapesAction {
   return {
     type: RECEIVE_SHAPES,
-    shapes: payload.shapes,
+    mouthCues: payload.data.mouthCues,
   };
 }
 
-interface ReceiveShapesErrorAction {
-  type: typeof RECEIVE_SHAPES_ERROR;
+// ANCHOR GetShapesAction
+type GetShapesAction = Function
+export function getShapes(message: string): GetShapesAction {
+  return (dispatch: Function) => {
+    dispatch(requestShapes());
+    return orchestrationApi({
+      method: "post",
+      url: "/request",
+      data: {
+        message,
+      },
+      responseType: "json",
+    })
+      .then((response) => {
+        dispatch(
+          receiveShapes({
+            data: response.data,
+          })
+        );
+        dispatch(getAudio(response.data.metadata.soundFile))
+      })
+      .catch((error) => dispatch(receiveError(error.message)));
+  };
+}
+
+// ANCHOR === AUDIO ===
+// ANCHOR RequestAudioAction
+interface RequestAudioAction {
+  type: typeof REQUEST_AUDIO;
+}
+function requestAudio(): RequestAudioAction {
+  return {
+    type: REQUEST_AUDIO,
+  };
+}
+
+// ANCHOR ReceiveAudioAction
+interface ReceiveAudioAction {
+  type: typeof RECEIVE_AUDIO;
+  audio: string;
+}
+interface AudioPayload {
+  audio: BlobPart;
+}
+function receiveAudio(payload: AudioPayload): ReceiveAudioAction {
+  const blob = new Blob([payload.audio], { type: "audio/wav" });
+  const audioUrl = URL.createObjectURL(blob);
+  return {
+    type: RECEIVE_AUDIO,
+    audio: audioUrl,
+  };
+}
+
+// ANCHOR GetAudioAction
+type GetAudioAction = Function
+function getAudio(url: string): GetAudioAction {
+  return (dispatch: Function) => {
+    dispatch(requestAudio());
+    return orchestrationApi({
+      method: "get",
+      url,
+      responseType: "arraybuffer",
+    })
+      .then((response) => {
+        dispatch(
+          receiveAudio({
+            audio: response.data,
+          })
+        );
+      })
+      .catch((error) => dispatch(receiveError(error.message)));
+  };
+}
+
+// ANCHOR === ERROR ===
+// ANCHOR ReceiveErrorAction
+interface ReceiveErrorAction {
+  type: typeof RECEIVE_ERROR;
   error: string;
 }
-function receiveShapesError(error: string): ReceiveShapesErrorAction {
+function receiveError(error: string): ReceiveErrorAction {
   return {
-    type: RECEIVE_SHAPES_ERROR,
+    type: RECEIVE_ERROR,
     error: error,
   };
 }
 
-// ANCHOR First Response, called when app initializes
-export function firstResponse(): Function {
-  return (dispatch: Function) => {
-    dispatch(requestResponse());
-    return axios({
-      method: "get",
-      url: REQUEST,
-      responseType: "arraybuffer",
-    })
-      .then((response) => {
-        dispatch(getShapes(response.headers.link)),
-          dispatch(
-            receiveResponse({
-              audio: response.data,
-            })
-          );
-      })
-      .catch((error) => dispatch(receiveResponseError(error.message)));
-  };
-}
-
 export type ActionTypes =
-  | RequestResponseAction
-  | ReceiveResponseAction
-  | ReceiveResponseErrorAction
+  | RequestAudioAction
+  | ReceiveAudioAction
   | RequestShapesAction
   | ReceiveShapesAction
-  | ReceiveShapesErrorAction;
+  | ReceiveErrorAction;

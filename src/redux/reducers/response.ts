@@ -1,28 +1,27 @@
 import { initialState } from "./state";
 import {
-  REQUEST_RESPONSE,
-  RECEIVE_RESPONSE,
-  RECEIVE_RESPONSE_ERROR,
+  REQUEST_AUDIO,
+  RECEIVE_AUDIO,
   REQUEST_SHAPES,
   RECEIVE_SHAPES,
-  RECEIVE_SHAPES_ERROR,
+  RECEIVE_ERROR,
   ActionTypes,
 } from "../actions/response";
 
 export default (state = initialState.response, action: ActionTypes) => {
   switch (action.type) {
-    case REQUEST_RESPONSE:
+    case REQUEST_AUDIO:
       return {
         ...state,
         isFetching: state.isFetching + 1,
       };
-    case RECEIVE_RESPONSE:
+    case RECEIVE_AUDIO:
       return {
         ...state,
         audio: action.audio,
         isFetching: state.isFetching - 1,
       };
-    case RECEIVE_RESPONSE_ERROR:
+    case RECEIVE_ERROR:
       return {
         ...state,
         error: action.error,
@@ -31,18 +30,14 @@ export default (state = initialState.response, action: ActionTypes) => {
       case REQUEST_SHAPES:
         return {
           ...state,
+          mouthCues: null,
+          audio: null,
           isFetching: state.isFetching + 1,
         };
       case RECEIVE_SHAPES:
         return {
           ...state,
-          shapes: action.shapes,
-          isFetching: state.isFetching - 1,
-        };
-      case RECEIVE_SHAPES_ERROR:
-        return {
-          ...state,
-          error: action.error,
+          mouthCues: action.mouthCues,
           isFetching: state.isFetching - 1,
         };
     default:

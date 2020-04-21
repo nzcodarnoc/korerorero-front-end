@@ -6,12 +6,12 @@ const { publicRuntimeConfig } = getConfig();
 const MOUTH_SHAPES = `${publicRuntimeConfig.staticFolder}/mouth-shapes`;
 import assembleTimeline from "./helpers/assemble-timeline";
 
-function Mouth({ audio, shapes }) {
+function Mouth({ audio, mouthCues }) {
   useEffect(() => {
     anime.set('#shape-A', {
       opacity: "1"
     });
-    if (!audio || !shapes) return;
+    if (!audio || !mouthCues) return;
     const sound = new Howl({
       src: [audio],
       format: ["wav"],
@@ -21,7 +21,7 @@ function Mouth({ audio, shapes }) {
       autoplay: false,
       loop: false,
     });
-    assembleTimeline(timeline, shapes);
+    assembleTimeline(timeline, mouthCues);
     anime.set('#shape-A', {
       opacity: "0"
     });
@@ -38,46 +38,12 @@ function Mouth({ audio, shapes }) {
             const id = `shape-${shape}`;
             return (
               <div key={id} className="mouth" id={id}>
-                <img src={src} alt="" width="100%" />
+                <img src={src} alt="" width="50%" />
               </div>
             );
           })}
         </div>
       </main>
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-          text-align: center;
-        }
-        .mouth-container {
-          margin-left: -100vw;
-        }
-        .mouth {
-          position: absolute;
-          opacity: 0;
-        }
-      `}</style>
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-      `}</style>
     </div>
   );
 }
