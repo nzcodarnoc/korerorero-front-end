@@ -9,9 +9,12 @@ app.post("/orchestration/request", function (req, res) {
   res.set("Content-Type", "application/json");
   res.sendFile(__dirname + "/public/shapes.json");
 });
-
-app.get("/orchestration/audio", function (req, res) {
+function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+app.get("/orchestration/audio", async function (req, res) {
   res.set("Content-Type", "audio/wav");
+  await timeout(1500);
   res.sendFile(__dirname + "/public/process.wav");
 });
 app.listen(8000, () => {
