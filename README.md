@@ -28,6 +28,10 @@ If this project is run without the orchestration service from the korerorero-rev
 
 To view this project with a mock orchestration service.
 
+This command start storybook and a mock service, so make sure you quit `korerorero-reverse-proxy` before you run it, otherwise there will be a port conflict resulting in network errors.
+
+The network mocks and the mock server are located in `__mocks__`. There is an artificial 1.5 second delay to simulate network lag.
+
 ```bash
 yarn run storybook
 ```
