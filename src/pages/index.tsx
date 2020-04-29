@@ -6,7 +6,6 @@ import Face from "../components/Face";
 import Mouth from "../components/Mouth";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-
 interface WidgetForwardDeclaration
   extends ComponentClass<{
     handleNewUserMessage: (userInput: string) => void;
@@ -36,14 +35,20 @@ function Index({ getShapes, isFetching, audio, mouthCues, error }: any) {
         <main>
           <h1 className="h3">Welcome to Korerorero!</h1>
 
-          {!!isFetching && <>Loading...</>}
+          {!!isFetching && (
+            <div className="loading-indicator">
+              <div className="loading-position">
+                Processing...
+              </div>
+            </div>
+          )}
           {!!error && (
             <>
               There was an error communicating with the orchestration service:{" "}
               <code>{error}</code>
             </>
           )}
-          {!error && !isFetching && (
+          {!error && (
             <Face>
               <Mouth audio={audio} mouthCues={mouthCues} />
             </Face>
