@@ -2,9 +2,9 @@
 // https://github.com/mozilla/DeepSpeech-examples/blob/r0.7/web_microphone_websocket/src/App.js
 import React, { Component } from "react";
 import io from "socket.io-client";
-import { RECOGNIZER_HOST, RECOGNIZER_PATH } from "../utils";
+import { RECOGNIZER_HOST, RECOGNIZER_PATH, STATIC_PATH } from "../utils";
 
-const DOWNSAMPLING_WORKER = "./downsampling_worker.js";
+const DOWNSAMPLING_WORKER = `.${STATIC_PATH}/downsampling_worker.js`;
 
 class Recognizer extends Component {
   constructor(props) {
