@@ -17,5 +17,7 @@ module.exports = {
   publicRuntimeConfig: {
     staticFolder: isProd ? "/front-end" : "",
     ORCHESTRATION_ENDPOINT: "http://localhost:8000/orchestration",
+    RECOGNIZER_HOST: "http://localhost:8000",
+    RECOGNIZER_PATH: "/recognizer/socket.io"
   },
 };

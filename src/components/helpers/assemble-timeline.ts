@@ -3,7 +3,6 @@ export default (timeline, mouthCues) => {
   let cursor = 0;
   const duration = 200;
   mouthCues.map((mouth) => {
-    console.log(mouth);
     timeline.add(
       {
         targets: `#shape-${mouth.value}`,
