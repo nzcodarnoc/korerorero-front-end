@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
 import Face from "../components/Face";
 import Mouth from "../components/Mouth";
+import Recognizer from "../components/Recognizer"
 import Head from "next/head";
 import dynamic from "next/dynamic";
 interface WidgetForwardDeclaration
@@ -33,6 +34,7 @@ function Index({ getShapes, isFetching, audio, mouthCues, error }: any) {
       </Head>
       <div className="container">
         <main>
+          <Recognizer />
           <h1 className="h3">Welcome to Korerorero!</h1>
 
           {!!isFetching && (
