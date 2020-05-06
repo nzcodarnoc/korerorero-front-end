@@ -60,7 +60,6 @@ class Recognizer extends Component {
   render() {
     return (
       <div className="App">
-        <pre>{JSON.stringify()}</pre>
         <div>
           <button
             disabled={!this.state.connected || this.state.recording}
