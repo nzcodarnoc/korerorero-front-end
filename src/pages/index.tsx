@@ -19,7 +19,7 @@ const Widget = dynamic(
   }
 ) as WidgetForwardDeclaration;
 
-function Index({ getShapes, isFetching, audio, mouthCues, error }: any) {
+function Index({ getShapes, isFetching, audio, mouthCues, isListening, error }: any) {
   useEffect(() => {
     getShapes("Hello");
   }, []);
@@ -34,7 +34,7 @@ function Index({ getShapes, isFetching, audio, mouthCues, error }: any) {
       </Head>
       <div className="container">
         <main>
-          <Recognizer />
+          <Recognizer isListening={isListening} />
           <h1 className="h3">Welcome to Korerorero!</h1>
 
           {!!isFetching && (
@@ -67,6 +67,7 @@ const mapState = (state: AppState) => ({
   error: state.response.error,
   audio: state.response.audio,
   mouthCues: state.response.mouthCues,
+  isListening: state.speech.isListening,
 });
 
 const mapActions = {

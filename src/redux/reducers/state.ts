@@ -1,5 +1,6 @@
 export interface AppState {
   response?: ResponseState;
+  speech?: SpeechState;
 };
 
 export interface MouthCues {
@@ -15,6 +16,12 @@ export interface ResponseState {
   audio?: string;
 };
 
+export interface SpeechState {
+  isSpeaking: boolean,
+  isListening: boolean,
+  isThinking: boolean,
+};
+
 export const initialState: AppState = {
   response: {
     isFetching: 0,
@@ -22,4 +29,9 @@ export const initialState: AppState = {
     mouthCues: null,
     audio: null,
   },
+  speech: {
+    isSpeaking: false,
+    isListening: false,
+    isThinking: false,
+  }
 };
