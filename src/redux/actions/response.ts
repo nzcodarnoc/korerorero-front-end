@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ENDPOINT } from "../../utils";
 import { MouthCues } from "../reducers/state";
+import { startedThinking } from "./speech";
 export const REQUEST_SHAPES = "REQUEST_SHAPES";
 export const RECEIVE_SHAPES = "RECEIVE_SHAPES";
 export const REQUEST_AUDIO = "REQUEST_AUDIO";
@@ -45,11 +46,12 @@ function receiveShapes(payload: ShapesPayload): ReceiveShapesAction {
   };
 }
 
-// ANCHOR GetShapesAction
-type GetShapesAction = Function
+// ANCHOR <export> GetShapesAction (entry-point)
+type GetShapesAction = Function;
 export function getShapes(message: string): GetShapesAction {
   return (dispatch: Function) => {
     dispatch(requestShapes());
+    dispatch(startedThinking());
     return orchestrationApi({
       method: "post",
       url: "/request",
@@ -64,7 +66,7 @@ export function getShapes(message: string): GetShapesAction {
             data: response.data,
           })
         );
-        dispatch(getAudio(response.data.metadata.soundFile))
+        dispatch(getAudio(response.data.metadata.soundFile));
       })
       .catch((error) => dispatch(receiveError(error.message)));
   };
@@ -99,7 +101,7 @@ function receiveAudio(payload: AudioPayload): ReceiveAudioAction {
 }
 
 // ANCHOR GetAudioAction
-type GetAudioAction = Function
+type GetAudioAction = Function;
 function getAudio(url: string): GetAudioAction {
   return (dispatch: Function) => {
     dispatch(requestAudio());

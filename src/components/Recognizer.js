@@ -3,6 +3,8 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
 import { RECOGNIZER_HOST, RECOGNIZER_PATH, STATIC_PATH } from "../utils";
+import { connect } from "react-redux";
+import { getShapes } from "../redux/actions/response";
 
 const DOWNSAMPLING_WORKER = `.${STATIC_PATH}/downsampling_worker.js`;
 
@@ -21,7 +23,7 @@ class Recognizer extends Component {
   componentDidMount() {
     let recognitionCount = 0;
 
-    this.socket = io.connect(RECOGNIZER_HOST, {path: RECOGNIZER_PATH});
+    this.socket = io.connect(RECOGNIZER_HOST, { path: RECOGNIZER_PATH });
 
     this.socket.on("connect", () => {
       console.log("socket connected");
@@ -38,14 +40,27 @@ class Recognizer extends Component {
       console.log("recognized:", results);
       const { recognitionOutput } = this.state;
       results.id = recognitionCount++;
+      this.props.getShapes(results.text);
       recognitionOutput.unshift(results);
       this.setState({ recognitionOutput });
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.isListening === prevProps.isListening) {
+      return;
+    }
+    if (this.props.isListening && this.state.connected) {
+      this.startRecording();
+    } else if (this.state.recording) {
+      this.stopRecording();
+    }
+  }
+
   render() {
     return (
       <div className="App">
+        <pre>{JSON.stringify()}</pre>
         <div>
           <button
             disabled={!this.state.connected || this.state.recording}
@@ -74,11 +89,10 @@ class Recognizer extends Component {
   }
 
   renderRecognitionOutput() {
+    if (this.state.recognitionOutput.length === 0) return <></>;
     return (
       <ul>
-        {this.state.recognitionOutput.map((r) => {
-          return <li key={r.id}>{r.text}</li>;
-        })}
+        <li>{this.state.recognitionOutput[0].text}</li>
       </ul>
     );
   }
@@ -204,4 +218,8 @@ class Recognizer extends Component {
   }
 }
 
-export default Recognizer;
+const mapActions = {
+  getShapes,
+};
+
+export default connect(null, mapActions)(Recognizer);

@@ -3,8 +3,10 @@ import anime from "animejs";
 import { MOUTH_SHAPES_PATH } from "../utils";
 import { Howl, Howler } from "howler";
 import assembleTimeline from "./helpers/assemble-timeline";
+import { connect } from "react-redux";
+import { startedSpeaking, endedSpeaking } from "../redux/actions/speech";
 
-function Mouth({ audio, mouthCues }) {
+function Mouth({ audio, mouthCues, startedSpeaking, endedSpeaking }) {
   useEffect(() => {
     anime.set("#shape-A", {
       opacity: "1",
@@ -18,6 +20,8 @@ function Mouth({ audio, mouthCues }) {
       targets: ".mouth",
       autoplay: false,
       loop: false,
+      begin: (_anim) => startedSpeaking(),
+      complete: (_anim) => endedSpeaking(),
     });
     assembleTimeline(timeline, mouthCues);
     anime.set("#shape-A", {
@@ -41,4 +45,9 @@ function Mouth({ audio, mouthCues }) {
   );
 }
 
-export default Mouth;
+const mapActions = {
+  startedSpeaking,
+  endedSpeaking,
+};
+
+export default connect(null, mapActions)(Mouth);
