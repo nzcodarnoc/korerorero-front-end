@@ -4,6 +4,10 @@
 
 This project is a component of korerorero-reverse-proxy project: <https://github.com/ServiceInnovationLab/korerorero-reverse-proxy>
 
+This project has only been tested in Chrome browser. It doesn't work in Safari, and hasn't been tested in Firefox or IE.
+
+Safari needs more work because of deviations from in the Web Audio API spec. Safari needs, at least, browser prefixes for some of the methods in `Recognizer.js`, and perhaps more.
+
 ## Next.js
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
