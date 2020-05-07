@@ -28,6 +28,7 @@ class Recognizer extends Component {
     this.socket.on("connect", () => {
       console.log("socket connected");
       this.setState({ connected: true });
+      this.startRecording();
     });
 
     this.socket.on("disconnect", () => {
@@ -46,54 +47,8 @@ class Recognizer extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.isListening === prevProps.isListening) {
-      return;
-    }
-    if (this.props.isListening && this.state.connected) {
-      this.startRecording();
-    } else if (this.state.recording) {
-      this.stopRecording();
-    }
-  }
-
   render() {
-    return (
-      <div className="App">
-        <div>
-          <button
-            disabled={!this.state.connected || this.state.recording}
-            onClick={this.startRecording}
-          >
-            Start Recognizing
-          </button>
-
-          <button disabled={!this.state.recording} onClick={this.stopRecording}>
-            Stop Recognizing
-          </button>
-
-          {this.renderTime()}
-        </div>
-        {this.renderRecognitionOutput()}
-      </div>
-    );
-  }
-
-  renderTime() {
-    return (
-      <span>
-        {(Math.round(this.state.recordingTime / 100) / 10).toFixed(1)}s
-      </span>
-    );
-  }
-
-  renderRecognitionOutput() {
-    if (this.state.recognitionOutput.length === 0) return <></>;
-    return (
-      <ul>
-        <li>{this.state.recognitionOutput[0].text}</li>
-      </ul>
-    );
+    return <></>;
   }
 
   createAudioProcessor(audioContext, audioSource) {
@@ -110,6 +65,7 @@ class Recognizer extends Component {
     };
 
     processor.onaudioprocess = (event) => {
+      if (!this.props.isListening) return;
       var data = event.inputBuffer.getChannelData(0);
       downsampler.postMessage({ command: "process", inputFrame: data });
     };
