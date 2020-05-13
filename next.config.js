@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 // See https://jaketrent.com/post/environment-variables-in-nextjs/
 const { parsed: localEnv } = require('dotenv').config()
 const isProd = process.env.NODE_ENV === "production";
