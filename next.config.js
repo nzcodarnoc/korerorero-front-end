@@ -1,5 +1,6 @@
 // See https://jaketrent.com/post/environment-variables-in-nextjs/
 const { parsed: localEnv } = require('dotenv').config()
+const isProd = process.env.NODE_ENV === "production";
 
 module.exports = {
   webpack: (config, { isServer }) => {
@@ -12,5 +13,5 @@ module.exports = {
 
     return config;
   },
-  assetPrefix: process.env.SELF_PATH
+  assetPrefix: isProd ? "/front-end" : "",
 };
