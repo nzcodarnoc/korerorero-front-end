@@ -11,4 +11,11 @@ module.exports = {
     return config;
   },
   assetPrefix: process.env.SELF_PATH,
+  publicRuntimeConfig: {
+    SELF_PATH: process.env.SELF_PATH,
+    ORCHESTRATION_ENDPOINT: process.env.ORCHESTRATION_ENDPOINT,
+    RECOGNIZER_HOST: process.env.RECOGNIZER_HOST,
+    RECOGNIZER_PATH: process.env.RECOGNIZER_PATH,
+  }
 };
+
