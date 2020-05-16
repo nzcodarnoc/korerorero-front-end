@@ -8,7 +8,7 @@ export const REQUEST_AUDIO = "REQUEST_AUDIO";
 export const RECEIVE_AUDIO = "RECEIVE_AUDIO";
 export const RECEIVE_ERROR = "RECEIVE_ERROR";
 
-var orchestrationApi = axios.create({
+const orchestrationApi = axios.create({
   baseURL: ORCHESTRATION_ENDPOINT,
 });
 // ANCHOR interface ShapesPayload
