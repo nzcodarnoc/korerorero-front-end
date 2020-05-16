@@ -54,7 +54,7 @@ export function getShapes(message: string): GetShapesAction {
     dispatch(startedThinking());
     return orchestrationApi({
       method: "post",
-      url: "/request",
+      url: "request",
       data: {
         message,
       },
