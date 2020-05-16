@@ -68,8 +68,11 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+
 # dotenv environment variables file
-.env
+# Next.js reccomends checking in .env
+# see: https://nextjs.org/docs/basic-features/environment-variables
+.env.local
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
