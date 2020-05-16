@@ -10,5 +10,5 @@ module.exports = {
     }
     return config;
   },
-  assetPrefix: process.env.NEXT_PUBLIC_SELF_PATH,
+  assetPrefix: process.env.SELF_PATH,
 };
