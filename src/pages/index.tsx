@@ -1,4 +1,4 @@
-import React, { useEffect, ComponentClass } from "react";
+import React, { useEffect } from "react";
 import { getShapes } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
@@ -6,18 +6,7 @@ import Face from "../components/Face";
 import Mouth from "../components/Mouth";
 import Recognizer from "../components/Recognizer"
 import Head from "next/head";
-import dynamic from "next/dynamic";
-interface WidgetForwardDeclaration
-  extends ComponentClass<{
-    handleNewUserMessage: (userInput: string) => void;
-  }> {}
-
-const Widget = dynamic(
-  () => import("react-chat-widget").then((mod) => mod.Widget),
-  {
-    ssr: false,
-  }
-) as WidgetForwardDeclaration;
+import ChatWidget from "../components/ChatWidget"
 
 function Index({ getShapes, isFetching, audio, mouthCues, isListening, error }: any) {
   useEffect(() => {
@@ -55,7 +44,7 @@ function Index({ getShapes, isFetching, audio, mouthCues, isListening, error }: 
               <Mouth audio={audio} mouthCues={mouthCues} />
             </Face>
           )}
-          <Widget handleNewUserMessage={didReceiveNewUserMessage} />
+          <ChatWidget handleNewUserMessage={didReceiveNewUserMessage} />
         </main>
       </div>
     </>
