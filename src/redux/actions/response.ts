@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ENDPOINT } from "../../utils";
+import { ORCHESTRATION_ENDPOINT } from "../../utils";
 import { MouthCues } from "../reducers/state";
 import { startedThinking } from "./speech";
 export const REQUEST_SHAPES = "REQUEST_SHAPES";
@@ -8,8 +8,8 @@ export const REQUEST_AUDIO = "REQUEST_AUDIO";
 export const RECEIVE_AUDIO = "RECEIVE_AUDIO";
 export const RECEIVE_ERROR = "RECEIVE_ERROR";
 
-var orchestrationApi = axios.create({
-  baseURL: ENDPOINT,
+const orchestrationApi = axios.create({
+  baseURL: ORCHESTRATION_ENDPOINT,
 });
 // ANCHOR interface ShapesPayload
 
@@ -54,7 +54,7 @@ export function getShapes(message: string): GetShapesAction {
     dispatch(startedThinking());
     return orchestrationApi({
       method: "post",
-      url: "/request",
+      url: "request",
       data: {
         message,
       },

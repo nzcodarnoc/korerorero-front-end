@@ -6,7 +6,7 @@ import { RECOGNIZER_HOST, RECOGNIZER_PATH, STATIC_PATH } from "../utils";
 import { connect } from "react-redux";
 import { getShapes } from "../redux/actions/response";
 
-const DOWNSAMPLING_WORKER = `.${STATIC_PATH}/downsampling_worker.js`;
+const DOWNSAMPLING_WORKER = STATIC_PATH + 'downsampling_worker.js';
 
 class Recognizer extends Component {
   constructor(props) {
