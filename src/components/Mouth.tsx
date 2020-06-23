@@ -5,6 +5,7 @@ import { Howl, Howler } from "howler";
 import assembleTimeline from "./helpers/assemble-timeline";
 import { connect } from "react-redux";
 import { startedSpeaking, endedSpeaking } from "../redux/actions/speech";
+require("../../public/" + MOUTH_SHAPES_PATH + "/mouth-shape-styles.scss");
 
 function Mouth({ audio, mouthCues, startedSpeaking, endedSpeaking }) {
   useEffect(() => {
