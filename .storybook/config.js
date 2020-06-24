@@ -5,7 +5,7 @@ import "react-chat-widget/lib/styles.css";
 
 setConfig({
   publicRuntimeConfig: {
-    THEME: "queen-olivia",
+    THEME: "grace",
     SELF_PATH: "",
     ORCHESTRATION_ENDPOINT: "http://localhost:8000/orchestration",
   },
