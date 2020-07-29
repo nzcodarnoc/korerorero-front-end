@@ -1,4 +1,4 @@
-#mouth-wrapper {
+.mouthWrapper {
   position: absolute;
   z-index: 2;
   width: 200px;

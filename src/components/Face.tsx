@@ -8,7 +8,7 @@ export default ({ children }: any) => {
       <div id="face-wrapper">
         <img src={src} alt="" width="100%" />
       </div>
-      <div id="mouth-wrapper">{children}</div>
+      {children}
     </div>
   );
 };

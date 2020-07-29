@@ -1,19 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getShapes } from "../redux/actions/response";
 import { connect } from "react-redux";
 import { AppState } from "../redux/reducers/state";
 import Face from "../components/Face";
 import Mouth from "../components/Mouth";
-import Recognizer from "../components/Recognizer"
+import Recognizer from "../components/Recognizer";
 import Head from "next/head";
-import ChatWidget from "../components/ChatWidget"
+import ChatWidget from "../components/ChatWidget";
 
-function Index({ getShapes, isFetching, audio, mouthCues, isListening, error }: any) {
+function Index({
+  getShapes,
+  isFetching,
+  audio,
+  mouthCues,
+  isListening,
+  error,
+}: any) {
   useEffect(() => {
     getShapes("Hello");
   }, []);
   function didReceiveNewUserMessage(message) {
     getShapes(message);
+  }
+  const [state, setState] = useState({
+    explicitUserAction: false,
+  });
+  function didExplicitUserAction(e) {
+    setState({
+      explicitUserAction: true,
+    });
   }
   return (
     <>
@@ -28,9 +43,7 @@ function Index({ getShapes, isFetching, audio, mouthCues, isListening, error }: 
 
           {!!isFetching && (
             <div className="loading-indicator">
-              <div className="loading-position">
-                Processing...
-              </div>
+              <div className="loading-position">Processing...</div>
             </div>
           )}
           {!!error && (
@@ -39,12 +52,30 @@ function Index({ getShapes, isFetching, audio, mouthCues, isListening, error }: 
               <code>{error}</code>
             </>
           )}
-          {!error && (
-            <Face>
-              <Mouth audio={audio} mouthCues={mouthCues} />
-            </Face>
+          {!error && (!isFetching || state.explicitUserAction) && (
+            <>
+              <div className="with-audio-content">
+                {!state.explicitUserAction && (
+                  <div
+                    className="explicit-user-action"
+                    onClick={didExplicitUserAction}
+                  >
+                    <div className="play-button">▶</div>
+                  </div>
+                )}
+                <div className="audio-content">
+                  <Face>
+                    <Mouth
+                      audio={audio}
+                      mouthCues={mouthCues}
+                      explicitUserAction={state.explicitUserAction}
+                    />
+                  </Face>
+                </div>
+              </div>
+              <ChatWidget handleNewUserMessage={didReceiveNewUserMessage} />
+            </>
           )}
-          <ChatWidget handleNewUserMessage={didReceiveNewUserMessage} />
         </main>
       </div>
     </>
