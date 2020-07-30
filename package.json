@@ -10,7 +10,6 @@
     "start-mock-server": "node __mocks__/server.js"
   },
   "dependencies": {
-    "@zeit/next-css": "^1.0.1",
     "animejs": "^3.2.0",
     "axios": "^0.19.2",
     "fs": "0.0.2",
