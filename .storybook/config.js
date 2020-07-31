@@ -8,6 +8,8 @@ setConfig({
     THEME: "grace",
     SELF_PATH: "",
     ORCHESTRATION_ENDPOINT: "http://localhost:8000/orchestration",
+    RECOGNIZER_HOST: "http://localhost:8000",
+    RECOGNIZER_PATH: "recognizer/socket.io",
   },
 });
 configure(require.context("../stories", true, /\.stories\.tsx?$/), module);
