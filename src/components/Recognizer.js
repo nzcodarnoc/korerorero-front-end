@@ -101,6 +101,8 @@ class Recognizer extends Component {
   };
 
   startMicrophone() {
+    const AudioContext =
+      window.AudioContext || window.webkitAudioContext; // Default // Safari and old versions of Chrome
     this.audioContext = new AudioContext();
 
     const success = (stream) => {

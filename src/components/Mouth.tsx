@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import anime from "animejs";
 import { MOUTH_SHAPES_PATH } from "../utils";
 import { Howl, Howler } from "howler";
 import assembleTimeline from "./helpers/assemble-timeline";
 import { connect } from "react-redux";
 import { startedSpeaking, endedSpeaking } from "../redux/actions/speech";
-require("../../public/" + MOUTH_SHAPES_PATH + "/mouth-shape-styles.scss");
+import styles from "../../public/mouth-shapes/grace/mouth-shape-styles.module.css";
 
-function Mouth({ audio, mouthCues, startedSpeaking, endedSpeaking }) {
+function Mouth({
+  audio,
+  mouthCues,
+  explicitUserAction,
+  startedSpeaking,
+  endedSpeaking,
+}) {
   useEffect(() => {
     anime.set("#shape-A", {
       opacity: "1",
@@ -25,23 +31,27 @@ function Mouth({ audio, mouthCues, startedSpeaking, endedSpeaking }) {
       complete: (_anim) => endedSpeaking(),
     });
     assembleTimeline(timeline, mouthCues);
-    anime.set("#shape-A", {
-      opacity: "0",
-    });
-    sound.play();
-    timeline.play();
+    if (explicitUserAction) {
+      anime.set("#shape-A", {
+        opacity: "0",
+      });
+      timeline.play();
+      sound.play();
+    }
   });
   return (
-    <div className="mouth-container">
-      {["A", "B", "C", "D", "E", "F", "G", "H", "X"].map((shape) => {
-        const src = `${MOUTH_SHAPES_PATH}/mouth-${shape}.svg`;
-        const id = `shape-${shape}`;
-        return (
-          <div key={id} className="mouth" id={id}>
-            <img src={src} alt="" width="100%" />
-          </div>
-        );
-      })}
+    <div className={styles.mouthWrapper}>
+      <div className="mouth-container">
+        {["A", "B", "C", "D", "E", "F", "G", "H", "X"].map((shape) => {
+          const src = `${MOUTH_SHAPES_PATH}/mouth-${shape}.svg`;
+          const id = `shape-${shape}`;
+          return (
+            <div key={id} className="mouth" id={id}>
+              <img src={src} alt="" width="100%" />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
