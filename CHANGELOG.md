@@ -8,6 +8,10 @@ This log was started at v0.3.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2020-08-09
+### Changed
+- Make the face responsive based on viewport width up to 800px wide
+
 ## [0.3.0] - 2020-08-08
 ### Changed
 - Make it compatible with Safai

@@ -5,3 +5,4 @@ export const RECOGNIZER_HOST = publicRuntimeConfig.RECOGNIZER_HOST;
 export const RECOGNIZER_PATH = publicRuntimeConfig.RECOGNIZER_PATH;
 export const STATIC_PATH = publicRuntimeConfig.SELF_PATH;
 export const MOUTH_SHAPES_PATH = STATIC_PATH + "mouth-shapes/grace";
+export const SHOW_CHAT_WIDGET = publicRuntimeConfig.SHOW_CHAT_WIDGET === "true";
