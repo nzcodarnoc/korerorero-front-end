@@ -7,6 +7,7 @@ import Mouth from "../components/Mouth";
 import Recognizer from "../components/Recognizer";
 import Head from "next/head";
 import ChatWidget from "../components/ChatWidget";
+import { SHOW_CHAT_WIDGET } from "../utils";
 
 function Index({
   getShapes,
@@ -35,12 +36,11 @@ function Index({
       <Head>
         <title>Korerorero</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
       </Head>
       <div className="container">
         <main>
           <Recognizer isListening={isListening} />
-          <h1 className="h3">Welcome to Korerorero!</h1>
-
           {!!isFetching && (
             <div className="loading-indicator">
               <div className="loading-position">Processing...</div>
@@ -73,7 +73,9 @@ function Index({
                   </Face>
                 </div>
               </div>
-              <ChatWidget handleNewUserMessage={didReceiveNewUserMessage} />
+              {SHOW_CHAT_WIDGET && (
+                <ChatWidget handleNewUserMessage={didReceiveNewUserMessage} />
+              )}
             </>
           )}
         </main>

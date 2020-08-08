@@ -1,7 +1,7 @@
 .mouthWrapper {
   position: absolute;
   z-index: 2;
-  width: 175px;
-  top: 279px;
-  left: 165px;
+  width: calc( (100% / 500) * 175);
+  margin-top: calc( (100% / 500) * 279);
+  left: calc( (100% / 500) * 165);
 }

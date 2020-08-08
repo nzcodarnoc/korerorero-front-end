@@ -6,7 +6,7 @@ export default ({ children }: any) => {
   return (
     <div id="face">
       <div id="face-wrapper">
-        <img src={src} alt="" width="100%" />
+        <img src={src} alt="" id="the-face" />
       </div>
       {children}
     </div>
