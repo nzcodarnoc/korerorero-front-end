@@ -16,6 +16,11 @@ export default (state = initialState.response, action: ActionTypes) => {
         isFetching: state.isFetching + 1,
       };
     case RECEIVE_AUDIO:
+      // Normally assigning in JS is enough for memory to be released
+      // because audio is a blob, the deallocation is manual
+      if (state.audio !== null) {
+        URL.revokeObjectURL(state.audio)
+      }
       return {
         ...state,
         audio: action.audio,
