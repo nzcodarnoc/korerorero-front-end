@@ -1,8 +1,11 @@
 {
   "name": "koreorero-front-end",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
+  "version": "0.3.1",
+  "author": "Conrad Johnston <conrad@darnoc.co.nz>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nzcodarnoc/korerorero-front-end.git"
+  },  "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

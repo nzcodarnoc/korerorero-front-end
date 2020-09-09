@@ -1,4 +1,4 @@
-FROM node:13
+FROM node:12-alpine
 
 EXPOSE 3000
 
@@ -9,3 +9,4 @@ RUN yarn install
 COPY . .
 RUN yarn build
 CMD [ "yarn", "start" ]
+USER node
