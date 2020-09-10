@@ -2,6 +2,7 @@
   "name": "koreorero-front-end",
   "version": "0.3.1",
   "author": "Conrad Johnston <conrad@darnoc.co.nz>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nzcodarnoc/korerorero-front-end.git"

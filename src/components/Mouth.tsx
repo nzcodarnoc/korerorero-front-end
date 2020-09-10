@@ -3,9 +3,12 @@ import anime from "animejs";
 import { MOUTH_SHAPES_PATH } from "../utils";
 import { Howl, Howler } from "howler";
 import assembleTimeline from "./helpers/assemble-timeline";
+import createAudioContext from "./helpers/ios-audio-context-fix";
 import { connect } from "react-redux";
 import { startedSpeaking, endedSpeaking } from "../redux/actions/speech";
 import styles from "../../public/mouth-shapes/grace/mouth-shape-styles.module.css";
+
+let audioContextFix: AudioContext;
 
 function Mouth({
   audio,
@@ -19,6 +22,13 @@ function Mouth({
       opacity: "1",
     });
     if (!audio || !mouthCues) return;
+    // iOS WebKit bug workaround
+    // https://bugs.webkit.org/show_bug.cgi?id=154538
+    if (!audioContextFix) {
+      audioContextFix = createAudioContext();
+      audioContextFix.close();
+    }
+
     const sound = new Howl({
       src: [audio],
       format: ["wav"],
@@ -27,8 +37,8 @@ function Mouth({
       targets: ".mouth",
       autoplay: false,
       loop: false,
-      begin: (_anim) => startedSpeaking(),
-      complete: (_anim) => endedSpeaking(),
+      begin: (_anim: any) => startedSpeaking(),
+      complete: (_anim: any) => endedSpeaking(),
     });
     assembleTimeline(timeline, mouthCues);
     if (explicitUserAction) {
