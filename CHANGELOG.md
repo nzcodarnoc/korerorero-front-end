@@ -8,6 +8,11 @@ This log was started at v0.3.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2020-13-09
+### Changed
+- Loading state is now animated
+- use LTS version of node
+
 ## [0.3.1] - 2020-08-09
 ### Changed
 - Make the face responsive based on viewport width up to 800px wide
