@@ -5,6 +5,7 @@ import { AppState } from "../redux/reducers/state";
 import Face from "../components/Face";
 import Mouth from "../components/Mouth";
 import Recognizer from "../components/Recognizer";
+import Loading from "../components/Loading";
 import Head from "next/head";
 import ChatWidget from "../components/ChatWidget";
 import { SHOW_CHAT_WIDGET } from "../utils";
@@ -31,19 +32,23 @@ function Index({
       explicitUserAction: true,
     });
   }
+
   return (
     <>
       <Head>
         <title>Korerorero</title>
         <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no"
+        />
       </Head>
       <div className="container">
         <main>
           <Recognizer isListening={isListening} />
           {!!isFetching && (
             <div className="loading-indicator">
-              <div className="loading-position">Processing...</div>
+              <div className="loading-position"><Loading /></div>
             </div>
           )}
           {!!error && (
